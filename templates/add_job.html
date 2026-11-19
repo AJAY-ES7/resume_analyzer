@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Job | Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0b0f1a; color: white; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .form-card { background: #161e2d; padding: 40px; border-radius: 20px; border: 1px solid #1e293b; width: 400px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #0b0f1a; border: 1px solid #1e293b; color: white; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #6366f1; border: none; color: white; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h2>Post New Job</h2>
+        <form method="POST">
+            <input type="text" name="title" placeholder="Job Title" required>
+            <textarea name="skills" placeholder="Skills (comma separated)" required></textarea>
+            <input type="number" name="experience" placeholder="Required Experience (Years)" required>
+            <input type="text" name="degree" placeholder="Required Degree" required>
+            <button type="submit">Create Posting</button>
+            <a href="/admin/jobs" style="color: #94a3b8; display: block; text-align: center; margin-top: 15px; text-decoration: none; font-size: 14px;">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

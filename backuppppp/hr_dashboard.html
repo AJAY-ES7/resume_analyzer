@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>HR Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+margin:0;
+}
+
+.nav{
+background:#1e2a38;
+color:white;
+padding:18px;
+font-size:22px;
+}
+
+.container{
+padding:40px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+width:400px;
+}
+
+select,input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+background:#4CAF50;
+border:none;
+padding:12px;
+color:white;
+cursor:pointer;
+border-radius:5px;
+width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+HR Resume Screening Dashboard
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Select Job</h3>
+
+<form action="/hr/upload" method="post" enctype="multipart/form-data">
+
+<select name="job_id">
+
+{% for job in jobs %}
+
+<option value="{{job[0]}}">
+{{job[1]}}
+</option>
+
+{% endfor %}
+
+</select>
+
+<h3>Upload Candidate Resumes</h3>
+
+<input type="file" name="resumes" multiple required>
+
+<button type="submit">
+Analyze Candidates
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

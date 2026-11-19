@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recruiter Access | ResumeAI</title>
+    <style>
+        :root {
+            --hr-accent: #10b981; /* Emerald/Green for growth and hiring */
+            --bg: #0f172a;
+            --card: #1e293b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: white;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Split Screen for HR: Information on left, Form on right */
+        .info-panel {
+            flex: 1;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1000');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px;
+            border-right: 1px solid #334155;
+        }
+
+        .info-panel h2 { font-size: 40px; margin-bottom: 20px; background: linear-gradient(to right, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-item { display: flex; align-items: center; margin-bottom: 15px; color: #94a3b8; }
+        .feature-item span { margin-right: 15px; color: var(--hr-accent); }
+
+        .form-panel {
+            width: 550px;
+            padding: 60px;
+            background: #111827;
+            overflow-y: auto;
+        }
+
+        .input-group { margin-bottom: 24px; }
+        label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        input:focus { border-color: var(--hr-accent); outline: none; }
+
+        .btn-hr {
+            background: var(--hr-accent);
+            color: #064e3b;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-hr:hover { background: #34d399; transform: scale(1.02); }
+
+        @media (max-width: 900px) {
+            .info-panel { display: none; }
+            .form-panel { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="info-panel">
+        <h2>Hire Smarter, <br>Not Harder.</h2>
+        <div class="feature-item"><span>✔</span> AI-Powered Resume Scoring</div>
+        <div class="feature-item"><span>✔</span> Automated Candidate Shortlisting</div>
+        <div class="feature-item"><span>✔</span> Batch Processing for Bulk Hiring</div>
+    </div>
+    
+    <div class="form-panel">
+        <div style="margin-bottom: 40px;">
+            <h1 style="margin:0;">Recruiter Signup</h1>
+            <p style="color: #94a3b8;">Join 500+ companies using ResumeAI.</p>
+        </div>
+
+        <form action="/signup/hr" method="POST">
+    <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Alex Rivera" required>
+    </div>
+    <div class="input-group">
+        <label>Work Email</label>
+        <input type="email" name="email" placeholder="alex@company.com" required>
+    </div>
+    <div class="input-group">
+        <label>Company Name</label>
+        <input type="text" name="company" placeholder="TechCorp Inc." required>
+    </div>
+    <div class="input-group">
+        <label>Company Size</label>
+        <select name="company_size">
+            <option value="1-10">1-10 Employees</option>
+            <option value="11-50">11-50 Employees</option>
+            <option value="51-200">51-200 Employees</option>
+            <option value="201+">201+ Employees</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label>Create Password</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+    </div>
+
+    <button type="submit" class="btn-hr">Get Recruiter Access</button>
+</form>
+        
+        <p style="text-align:center; color:#4b5563; margin-top:30px;">
+            Looking for a job? <a href="/signup/user" style="color:var(--hr-accent);">Sign up as Candidate</a>
+        </p>
+    </div>
+</body>
+</html>

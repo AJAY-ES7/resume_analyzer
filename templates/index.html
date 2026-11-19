@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ResumeAI | Future of Career Growth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --bg: #0f172a; --card: rgba(30, 41, 59, 0.7); }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; overflow-x: hidden; }
+        
+        /* Glass Navbar */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 80px; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .hero {
+            padding: 120px 20px; text-align: center;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(79, 70, 229, 0.1), transparent);
+        }
+
+        .hero h2 { font-size: 56px; font-weight: 800; margin-bottom: 20px; letter-spacing: -2px; }
+        .hero p { color: #94a3b8; font-size: 20px; max-width: 600px; margin: 0 auto 40px; }
+
+        .upload-card {
+            background: var(--card); backdrop-filter: blur(16px);
+            padding: 50px; width: 450px; margin: 0 auto;
+            border-radius: 32px; border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        input[type="file"] {
+            background: rgba(15, 23, 42, 0.5); border: 2px dashed #334155;
+            padding: 30px; width: 100%; border-radius: 16px; color: #94a3b8;
+            cursor: pointer; transition: 0.3s; box-sizing: border-box;
+        }
+
+        input[type="file"]:hover { border-color: var(--primary); color: white; }
+
+        select {
+            width: 100%; padding: 15px; margin: 20px 0; border-radius: 12px;
+            background: #0f172a; border: 1px solid #334155; color: white;
+        }
+
+        .btn-analyze {
+            width: 100%; padding: 18px; border-radius: 14px; border: none;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white; font-weight: 700; font-size: 16px; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <h1 style="font-size: 24px; color: var(--primary);">ResumeAI.</h1>
+    <div style="display:flex; gap:30px; align-items:center;">
+        <a href="/" style="color:white; text-decoration:none; font-weight:600;">Home</a>
+        
+        {% if session.get('role') %}
+            {% if session.get('role') == 'user' %}
+                <a href="/profile" style="color:white; text-decoration:none; font-weight:600;">My Profile</a>
+            {% endif %}
+            
+            <a href="/logout" style="background:var(--primary); padding:10px 20px; border-radius:8px; text-decoration:none; color:white; font-weight:600;">Logout</a>
+        {% else %}
+            <a href="/login" style="color:white; text-decoration:none; font-weight:600;">Sign In</a>
+            <a href="/signup_choice" style="background:var(--primary); padding:10px 20px; border-radius:8px; text-decoration:none; color:white; font-weight:600;">Get Started</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="hero">
+    <h2>Unlock Your Potential.</h2>
+    <p>Upload your resume and let our AI optimize it for high-growth job opportunities.</p>
+    
+    <div class="upload-card">
+        <form action="/predict_form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="resume_file" required>
+            <select name="job_id">
+                <option value="">Resume Only Mode</option>
+                {% for job in jobs %}
+                    <option value="{{ job[0] }}">{{ job[1] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-analyze">Analyze & Score ⚡</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

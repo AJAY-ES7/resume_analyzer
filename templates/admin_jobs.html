@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Management | ResumeAI Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg: #0b0f1a;
+            --card: #161e2d;
+            --sidebar: #111827;
+            --border: #1e293b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: #e2e8f0;
+            display: flex;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #111827; /* Matching the dark theme */
+    position: fixed;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+        .logout-btn {
+    margin-top: auto;
+    padding: 14px 18px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+         .content {
+    margin-left: 260px;
+    padding: 60px;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+        .sidebar h2 { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 40px; }
+
+        .sidebar a {
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        
+
+        
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+
+        .table-container {
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1e293b; color: #94a3b8; text-align: left; padding: 18px; font-size: 13px; text-transform: uppercase; }
+        td { padding: 18px; border-bottom: 1px solid var(--border); }
+
+        .action-btns { display: flex; gap: 10px; }
+        
+        .btn-edit {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-delete {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-edit:hover { background: var(--primary); color: white; }
+        .btn-delete:hover { background: var(--danger); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ResumeAI <span style="color:white; font-weight:200;">Pro</span></h2>
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users">👥 User Control</a>
+    <a href="/admin/hr">💼 HR Control</a>
+    <a href="/admin/jobs" class="active">📝 Job Control</a>
+    <a href="/logout" class="logout-btn">🚪 Logout</a>
+</div>
+
+<div class="content">
+    <div class="header-section">
+        <div>
+            <h1 style="margin:0;">Job Opportunities</h1>
+            <p style="color: #94a3b8; margin-top:5px;">Manage roles and requirements</p>
+        </div>
+        <a href="/admin/add_job" class="btn-add">+ Post New Job</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Experience</th>
+                    <th>Degree</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for j in jobs %}
+                <tr>
+                    <td><strong>{{ j[1] }}</strong></td>
+                    <td>{{ j[3] }} Years</td>
+                    <td><span style="color: #94a3b8;">{{ j[4] }}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/admin/edit_job/{{ j[0] }}" class="btn-edit">Edit</a>
+                            <a href="/delete_job/{{ j[0] }}" class="btn-delete" onclick="return confirm('Delete this job listing?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

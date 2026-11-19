@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join Us | ResumeAI</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0f172a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 { margin-bottom: 40px; font-weight: 700; }
+
+        .choice-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        .choice-card {
+            background: #1e293b;
+            width: 300px;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #334155;
+            text-decoration: none;
+            color: white;
+        }
+
+        .choice-card:hover {
+            transform: scale(1.05);
+            border-color: #6366f1;
+            background: #262f45;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .choice-card h3 { font-size: 24px; margin: 10px 0; }
+        .choice-card p { color: #94a3b8; line-height: 1.5; }
+
+        .btn-select {
+            margin-top: 20px;
+            display: inline-block;
+            background: #334155;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .choice-card:hover .btn-select {
+            background: #6366f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>I want to join as a...</h1>
+    <div class="choice-container">
+        <a href="/signup/user" class="choice-card">
+            <span class="icon">🚀</span>
+            <h3>Candidate</h3>
+            <p>Analyze my resume, find job matches, and improve my score.</p>
+            <div class="btn-select">Register as User</div>
+        </a>
+
+        <a href="/signup/hr" class="choice-card">
+            <span class="icon">💼</span>
+            <h3>Recruiter</h3>
+            <p>Post jobs, screen multiple resumes, and rank top talent instantly.</p>
+            <div class="btn-select">Register as HR</div>
+        </a>
+    </div>
+</body>
+</html>

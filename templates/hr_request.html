@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request Job | ResumeAI HR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #6366f1; 
+            --bg: #0f172a; 
+            --card: rgba(30, 41, 59, 0.7); 
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body { 
+            margin: 0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); 
+            color: white; 
+            min-height: 100vh;
+        }
+
+        /* Matches HR Dashboard Nav */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 80px; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        nav a {
+            color: white; text-decoration: none; margin-left: 20px;
+            font-weight: 600; font-size: 14px; transition: 0.3s;
+        }
+        nav a:hover { color: var(--primary); }
+
+        .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+
+        /* Matches the Dashboard Card Style */
+        .glass-card {
+            background: var(--card); padding: 40px; border-radius: 24px;
+            border: 1px solid var(--border); backdrop-filter: blur(12px);
+            margin-bottom: 40px;
+        }
+
+        h1, h2, h3 { font-weight: 800; letter-spacing: -1px; }
+
+        /* Form Styling */
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--primary); font-weight: 600; }
+        
+        input, textarea {
+            width: 100%; padding: 14px; margin-bottom: 20px;
+            background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border);
+            border-radius: 12px; color: white; font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+        .btn-submit {
+            background: var(--primary); color: white; border: none;
+            padding: 16px; border-radius: 12px; font-weight: 700;
+            cursor: pointer; width: 100%; transition: 0.3s;
+        }
+        .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* History Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: var(--primary); font-size: 12px; text-transform: uppercase; padding: 15px; }
+        td { padding: 15px; border-top: 1px solid var(--border); font-size: 14px; }
+
+        .status { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .approved { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .rejected { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .error-msg {
+            background: rgba(239, 68, 68, 0.1); color: #ef4444; 
+            padding: 15px; border-radius: 12px; border: 1px solid #ef4444;
+            margin-bottom: 25px; text-align: center; font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <h1 style="font-size: 24px; color: var(--primary); margin:0;">ResumeAI <span style="color:white; font-size:14px; font-weight:400;">HR Portal</span></h1>
+    <div>
+        <a href="/hr_dashboard">📊 Dashboard</a>
+        <a href="/hr/request_job" style="color:var(--primary)">📝 Request Job</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="glass-card">
+        <h2 style="margin-top:0;">Request New Opening</h2>
+        <p style="color: #94a3b8; margin-bottom: 30px;">Submit a job role for admin approval. Once approved, it will appear in the candidate portal.</p>
+
+        {% if error %}
+        <div class="error-msg">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label>Job Title</label>
+            <input type="text" name="title" placeholder="e.g. Senior Backend Engineer" required>
+            
+            <label>Required Skills</label>
+            <textarea name="skills" rows="3" placeholder="List core technologies separated by commas..." required></textarea>
+            
+            <div style="display: flex; gap: 20px;">
+                <div style="flex: 1;">
+                    <label>Min. Experience (Years)</label>
+                    <input type="number" name="experience" required>
+                </div>
+                <div style="flex: 1;">
+                    <label>Required Degree</label>
+                    <input type="text" name="degree" placeholder="e.g. B.Tech CS" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-submit">Send Request to Admin</button>
+        </form>
+    </div>
+
+    <div class="glass-card" style="padding: 30px;">
+        <h3 style="margin-top:0;">Submission History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Job Role</th>
+                    <th>Submitted On</th>
+                    <th>Current Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in requests %}
+                <tr>
+                    <td><strong>{{ r[1] }}</strong></td>
+                    <td style="color: #94a3b8;">{{ r[5] }}</td>
+                    <td><span class="status {{ r[6]|lower }}">{{ r[6] }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

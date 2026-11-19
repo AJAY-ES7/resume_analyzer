@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Candidate Ranking</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+margin:0;
+}
+
+.header{
+background:#1e2a38;
+color:white;
+padding:20px;
+font-size:22px;
+}
+
+.container{
+padding:40px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+th,td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+th{
+background:#2f3d4d;
+color:white;
+}
+
+.high{
+color:green;
+font-weight:bold;
+}
+
+.medium{
+color:orange;
+font-weight:bold;
+}
+
+.low{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+Candidate Ranking Results
+</div>
+<div style="margin-bottom:20px;">
+<button onclick="downloadExcel()">Download Ranked Candidates (Excel)</button>
+</div>
+
+<div class="container">
+<table>
+
+<tr>
+<th>Rank</th>
+<th>Candidate</th>
+<th>Skill Match</th>
+<th>Experience</th>
+<th>Education</th>
+<th>Skill Gaps</th>
+<th>Final Score</th>
+<th>Status</th>
+</tr>
+
+{% for c in candidates %}
+
+<tr>
+
+<td>{{loop.index}}</td>
+
+<td>{{c.name}}</td>
+
+<td>{{c.skill_match}}%</td>
+
+<td>{{c.experience}}</td>
+
+<td>{{c.education}}</td>
+
+<td>{{c.missing}}</td>
+
+<td>{{c.score}}%</td>
+
+<td>
+
+{% if c.score > 75 %} <span class="high">Shortlisted</span>
+
+{% elif c.score > 50 %} <span class="medium">Review</span>
+
+{% else %} <span class="low">Reject</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+
+</div>
+<script>
+
+function downloadExcel(){
+
+    const data = {{ candidates | tojson }};
+    const url = "/download_excel?data=" + encodeURIComponent(JSON.stringify(data));
+
+    window.location.href = url;
+
+}
+
+</script>
+
+</body>
+
+</html>

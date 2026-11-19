@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ResumeAI</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #0f172a;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+        }
+
+        nav h1 {
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        nav ul li:hover {
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 40px;
+            width: 400px;
+            margin: 40px auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .card input, .card select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .card button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: #6366f1;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background: #4f46e5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #94a3b8;
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <h1>ResumeAI</h1>
+    <ul>
+        <li>About Us</li>
+        <li>Contact</li>
+        <li>Login</li>
+        <li><a href="/profile">profile</a></li>
+    </ul>
+</nav>
+
+<div class="hero">
+    <h2>AI Resume Analyzer</h2>
+    <p>Upload your resume and get professional ATS insights instantly.</p>
+</div>
+
+<div class="card">
+    <form action="/predict_form" method="POST" enctype="multipart/form-data">
+
+        <label>Upload Resume</label>
+        <input type="file" name="resume_file" required>
+
+        <label>Select Job (Optional)</label>
+        <select name="job_id">
+            <option value="">Resume Only Mode</option>
+            {% for job in jobs %}
+                <option value="{{ job[0] }}">{{ job[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Analyze Resume</button>
+
+    </form>
+</div>
+
+<footer>
+    © 2026 ResumeAI. All rights reserved.
+</footer>
+
+</body>
+</html>
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HR Management | ResumeAI Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --danger: #ef4444;
+            --bg: #0b0f1a;
+            --card: #161e2d;
+            --sidebar: #111827;
+            --border: #1e293b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: #e2e8f0;
+            display: flex;
+        }
+
+        .sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #111827; /* Dark theme */
+    border-right: 1px solid #1e293b;
+    position: fixed;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Crucial for alignment */
+}
+
+.content {
+    margin-left: 260px;
+    padding: 60px;
+    width: calc(100% - 260px); /* Keeps content inside the window */
+    box-sizing: border-box;
+}
+
+.logout-btn {
+    margin-top: auto; /* Pushes to bottom */
+    padding: 14px 18px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: center; /* Centers the word 'Logout' */
+    display: block;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+        .sidebar h2 { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 40px; }
+
+        .sidebar a {
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+
+        .content {
+    margin-left: 260px;
+    padding: 60px;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+        h1 { font-size: 32px; font-weight: 800; margin-bottom: 30px; }
+
+        .table-container {
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1e293b; color: #94a3b8; text-align: left; padding: 18px; font-size: 14px; text-transform: uppercase; }
+        td { padding: 18px; border-bottom: 1px solid var(--border); }
+
+        .delete {
+            color: var(--danger);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            transition: 0.3s;
+        }
+
+        .delete:hover { background: var(--danger); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ResumeAI <span style="color:white; font-weight:200;">Pro</span></h2>
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users">👥 User Control</a>
+    <a href="/admin/hr" class="active">💼 HR Control</a>
+    <a href="/admin/jobs" >📝 Job Control</a>
+    <a href="/logout" class="logout-btn">🚪 Logout</a>
+</div>
+
+<div class="content">
+    <h1>HR Partners</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>HR Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in hrs %}
+                <tr>
+                    <td>#{{h[0]}}</td>
+                    <td><strong>{{h[1]}}</strong></td>
+                    <td style="color: #94a3b8;">{{h[2]}}</td>
+                    <td>
+                        <a class="delete" href="/delete_hr/{{h[0]}}" onclick="return confirm('Remove HR Access?')">Remove Partner</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

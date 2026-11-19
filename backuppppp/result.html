@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        nav h1 {
+            font-size: 22px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            color: #94a3b8;
+        }
+
+        nav ul li:hover {
+            color: white;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+
+        /* Circular Meter */
+        .meter {
+            width: 180px;
+            height: 180px;
+            margin: auto;
+            position: relative;
+        }
+
+        .circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#6366f1 0deg, #1e293b 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .circle span {
+            position: absolute;
+        }
+
+        .accordion {
+            background: #1e293b;
+            border-radius: 12px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .accordion-content {
+            padding: 15px 20px;
+            display: none;
+            color: #cbd5e1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #94a3b8;
+            margin-top: 80px;
+        }
+        .score-container{
+    text-align:center;
+    margin:30px 0;
+}
+
+.circle{
+    position:relative;
+    width:150px;
+    height:150px;
+    margin:auto;
+}
+
+.circle svg{
+    width:150px;
+    height:150px;
+    transform:rotate(-90deg);
+}
+
+circle{
+    fill:none;
+    stroke:#eee;
+    stroke-width:12;
+}
+
+.progress{
+    stroke:#4CAF50;
+    stroke-dasharray:377;
+    transition:stroke-dashoffset 1.5s ease;
+}
+
+.score-text{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:28px;
+    font-weight:bold;
+}
+
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <h1>ResumeAI</h1>
+    <ul>
+        <li>About</li>
+        <li>Contact</li>
+        <li>Login</li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <!-- SCORE METER -->
+    <div class="score-container">
+
+    <div class="circle">
+        <svg>
+            <circle cx="70" cy="70" r="60"></circle>
+            <circle cx="70" cy="70" r="60" class="progress"
+                style="stroke-dashoffset: calc(377 - (377 * {{features.final_score}}) / 100);">
+            </circle>
+        </svg>
+
+        <div class="score-text">
+            {{features.final_score}}%
+        </div>
+
+    </div>
+
+    <h3>Resume Score</h3>
+
+</div>
+
+
+    <!-- ACCORDIONS -->
+
+    <!-- SKILLS SECTION -->
+
+{% if features.mode == "job_match" %}
+
+<div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Matched Skills
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+        <ul>
+            {% for skill in features.matched_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Missing Skills
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+        <ul>
+            {% for skill in features.missing_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% else %}
+
+<div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Resume Skills Detected
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+        <ul>
+            {% for skill in features.extracted_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endif %}
+
+
+    <div class="accordion">
+        <div class="accordion-header" onclick="toggle(this)">
+            Weaknesses
+            <span>+</span>
+        </div>
+        <div class="accordion-content">
+            {{ features.weaknesses }}
+        </div>
+    </div>
+    <!-- SUGGESTIONS -->
+
+<div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Suggestions to Improve Resume
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+
+        <ul>
+
+        {% if features.final_score < 50 %}
+            <li>Add more technical skills related to your domain</li>
+            <li>Include personal or academic projects</li>
+            <li>Use strong action verbs like built, developed, designed</li>
+        {% endif %}
+
+        {% if features.resume_length_score < 0.4 %}
+            <li>Your resume is too short. Add more details about projects and experience.</li>
+        {% endif %}
+
+        {% if features.action_verb_score < 0.3 %}
+            <li>Use stronger action verbs to describe your work</li>
+        {% endif %}
+
+        {% if features.grammar_score < 0.7 %}
+            <li>Improve sentence structure and grammar clarity</li>
+        {% endif %}
+
+        <li>Add measurable achievements (example: "Improved model accuracy by 15%")</li>
+        <li>Include GitHub or portfolio links</li>
+
+        </ul>
+
+    </div>
+</div>
+
+    <div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Recommended Jobs
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+        <ul>
+        {% for job in features.job_recommendations %}
+            <li>{{ job }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+     <div class="accordion">
+    <div class="accordion-header" onclick="toggle(this)">
+        Learning Recommendations
+        <span>+</span>
+    </div>
+
+    <div class="accordion-content">
+        <ul>
+        {% for video in features.video_recommendations %}
+            <li>
+                <a href="{{ video }}" target="_blank">
+                    Watch Tutorial
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    © 2026 ResumeAI. All rights reserved.
+</footer>
+
+<script>
+    // Animated Score Meter
+    const score = {{ features.final_score }};
+    const circle = document.getElementById("scoreCircle");
+
+    let current = 0;
+    const interval = setInterval(() => {
+        if (current >= score) {
+            clearInterval(interval);
+        } else {
+            current++;
+            circle.style.background =
+                `conic-gradient(#6366f1 ${current * 3.6}deg, #1e293b 0deg)`;
+            document.getElementById("scoreText").innerText = current + "%";
+        }
+    }, 15);
+
+    function toggle(header) {
+        const content = header.nextElementSibling;
+        content.style.display =
+            content.style.display === "block" ? "none" : "block";
+    }
+</script>
+
+</body>
+</html>

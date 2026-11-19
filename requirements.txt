@@ -1,0 +1,11 @@
+flask
+pdfminer.six
+python-docx
+sentence-transformers
+transformers
+torch
+numpy
+scikit-learn
+pandas
+matplotlib
+Jinja2

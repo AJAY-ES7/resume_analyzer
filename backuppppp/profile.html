@@ -1,0 +1,33 @@
+<h2>My Resume Analysis History</h2>
+
+<table border="1">
+
+<tr>
+<th>Job</th>
+<th>Score</th>
+<th>Skill %</th>
+<th>Experience</th>
+<th>Education</th>
+<th>Date</th>
+<th>Resume</th>
+</tr>
+
+{% for row in history %}
+
+<tr>
+<td>{{row[0]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+<td>{{row[3]}}</td>
+<td>{{row[4]}}</td>
+<td>{{row[5]}}</td>
+
+<td>
+<a href="/{{row[6]}}" target="_blank">View Resume</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
